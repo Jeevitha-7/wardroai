@@ -14,7 +14,7 @@
 
 ---
 
-## Jeevith
+## Jeevitha
 
 - Image preprocessing
 - Color extraction
