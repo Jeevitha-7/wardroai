@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Burgundy Cotton Kurti",
+    "category": "Topwear",
+    "color": "Burgundy",
+    "style": "Traditional",
+    "source": "Biba",
+    "estimated_price": "₹999 - ₹1499",
+    "search_query": "burgundy cotton kurti women"
+  },
+  {
+    "name": "Cream Oversized Hoodie",
+    "category": "Topwear",
+    "color": "Cream",
+    "style": "Casual",
+    "source": "H&M",
+    "estimated_price": "₹1299 - ₹1999",
+    "search_query": "cream oversized hoodie women"
+  },
+  {
+    "name": "Black Cargo Pants",
+    "category": "Bottomwear",
+    "color": "Black",
+    "style": "Streetwear",
+    "source": "Myntra",
+    "estimated_price": "₹1499 - ₹2499",
+    "search_query": "black cargo pants women"
+  },
+  {
+    "name": "Blue Denim Jeans",
+    "category": "Bottomwear",
+    "color": "Denim Blue",
+    "style": "Casual",
+    "source": "Levi's",
+    "estimated_price": "₹1999 - ₹3999",
+    "search_query": "blue denim jeans women"
+  },
+  {
+    "name": "White Chunky Sneakers",
+    "category": "Footwear",
+    "color": "White",
+    "style": "Casual",
+    "source": "Nike",
+    "estimated_price": "₹2999 - ₹6999",
+    "search_query": "white chunky sneakers women"
+  },
+  {
+    "name": "Black Formal Shoes",
+    "category": "Footwear",
+    "color": "Black",
+    "style": "Formal",
+    "source": "Amazon",
+    "estimated_price": "₹999 - ₹1999",
+    "search_query": "black formal shoes women"
+  },
+  {
+    "name": "Dusty Pink Anarkali",
+    "category": "Topwear",
+    "color": "Dusty Pink",
+    "style": "Traditional",
+    "source": "FabIndia",
+    "estimated_price": "₹2499 - ₹4999",
+    "search_query": "dusty pink anarkali suit women"
+  },
+  {
+    "name": "Sand Palazzo Pants",
+    "category": "Bottomwear",
+    "color": "Sand",
+    "style": "Indo-Western",
+    "source": "Ajio",
+    "estimated_price": "₹899 - ₹1599",
+    "search_query": "sand beige palazzo pants women"
+  }
+]
