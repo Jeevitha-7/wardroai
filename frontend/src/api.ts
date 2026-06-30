@@ -20,3 +20,13 @@ export async function getHistory() {
   const res = await fetch(`${API_URL}/history`);
   return res.json();
 }
+
+export async function getAnalysisById(id: string) {
+  const res = await fetch(`${API_URL}/analysis/${id}`);
+  return res.json();
+}
+
+export async function getHealth() {
+  const res = await fetch(`${API_URL}/health`);
+  return res.json();
+}
