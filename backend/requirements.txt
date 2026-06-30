@@ -3,3 +3,8 @@ uvicorn
 python-multipart
 pillow
 requestsrequests
+numpy
+mediapipe
+streamlit
+pandas
+pip-audit

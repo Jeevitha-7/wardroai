@@ -1,8 +1,9 @@
 import sqlite3
 import json
 from datetime import datetime
+from pathlib import Path
 
-DB_NAME = "wardroai.db"
+DB_NAME = Path(__file__).resolve().parent / "wardroai.db"
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
