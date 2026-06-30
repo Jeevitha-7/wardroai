@@ -1,3 +1,14 @@
+---
+title: WardroAI
+emoji: 👕
+colorFrom: blue
+colorTo: purple
+sdk: streamlit
+sdk_version: "1.45.1"
+app_file: app.py
+pinned: false
+---
+
 # WardroAI
 
 WardroAI is a Streamlit-based offline outfit analyzer. Upload a full outfit image, choose an occasion and styling preference, and the app returns a structured fashion breakdown with detected garment zones, dominant colors, fit scores, local catalog suggestions, and JSON export.
