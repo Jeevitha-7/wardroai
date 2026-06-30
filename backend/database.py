@@ -63,3 +63,14 @@ def get_history():
         }
         for r in rows
     ]
+
+
+def get_analysis_by_id(analysis_id):
+    conn = sqlite3.connect(DB_NAME)
+    cur = conn.cursor()
+    cur.execute("SELECT data FROM analyses WHERE id = ?", (analysis_id,))
+    row = cur.fetchone()
+    conn.close()
+    if not row:
+        return {"error": "not_found"}
+    return json.loads(row[0])
