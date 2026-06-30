@@ -1,12 +1,38 @@
-import React, { useState } from "react";
-import { Upload, Cpu, WifiOff, Database, Copy, Download } from "lucide-react";
-import { analyzeOutfit } from "./api";
+import React, { useEffect, useState } from "react";
+import { Upload, Cpu, WifiOff, Database } from "lucide-react";
+import { analyzeOutfit, getHistory, getAnalysisById, getHealth } from "./api";
 
 export default function App() {
+  const [page, setPage] = useState<"analyze" | "results" | "history" | "settings">("analyze");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [history, setHistory] = useState<any[]>([]);
+  const [health, setHealth] = useState<any>(null);
+
+  useEffect(() => {
+    if (page === "history") loadHistory();
+    if (page === "settings") loadHealth();
+  }, [page]);
+
+  async function loadHistory() {
+    try {
+      const data = await getHistory();
+      setHistory(data || []);
+    } catch {
+      setHistory([]);
+    }
+  }
+
+  async function loadHealth() {
+    try {
+      const data = await getHealth();
+      setHealth(data);
+    } catch {
+      setHealth(null);
+    }
+  }
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = e.target.files?.[0];
@@ -24,25 +50,21 @@ export default function App() {
     try {
       const data = await analyzeOutfit(file);
       setResult(data);
-    } catch (err) {
+      setPage("results");
+    } catch {
       alert("Failed to analyze image. Check backend is running.");
     }
     setLoading(false);
   }
 
-  function copyJSON() {
-    navigator.clipboard.writeText(JSON.stringify(result, null, 2));
-    alert("JSON copied");
-  }
-
-  function downloadJSON() {
-    const blob = new Blob([JSON.stringify(result, null, 2)], {
-      type: "application/json",
-    });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "wardroai-analysis.json";
-    a.click();
+  async function openHistoryItem(id: string) {
+    try {
+      const data = await getAnalysisById(id);
+      setResult(data);
+      setPage("results");
+    } catch {
+      alert("Failed to load analysis");
+    }
   }
 
   return (
@@ -52,88 +74,165 @@ export default function App() {
         <p>Offline AI Outfit Breakdown</p>
 
         <nav>
-          <button className="active">Analyze Outfit</button>
-          <button>Results</button>
-          <button>History</button>
-          <button>Settings</button>
+          <button className={page === "analyze" ? "active" : ""} onClick={() => setPage("analyze")}>
+            Analyze Outfit
+          </button>
+          <button className={page === "results" ? "active" : ""} onClick={() => setPage("results")}>
+            Results
+          </button>
+          <button className={page === "history" ? "active" : ""} onClick={() => setPage("history")}>
+            History
+          </button>
+          <button className={page === "settings" ? "active" : ""} onClick={() => setPage("settings")}>
+            Settings
+          </button>
         </nav>
 
         <div className="status">
-          <span><WifiOff size={16}/> Offline Mode</span>
-          <span><Cpu size={16}/> CPU Inference</span>
-          <span><Database size={16}/> Local Database</span>
+          <span><WifiOff size={16} /> Offline Mode</span>
+          <span><Cpu size={16} /> CPU Inference</span>
+          <span><Database size={16} /> Local Database</span>
         </div>
       </aside>
 
       <main className="main">
-        <section className="hero">
-          <h2>Upload an outfit image</h2>
-          <p>WardroAI breaks it into structured fashion data using offline CPU processing.</p>
-        </section>
-
-        <section className="grid">
-          <div className="card">
-            <h3>Outfit Image</h3>
-
-            <label className="upload">
-              <Upload size={28}/>
-              <span>Choose image</span>
-              <input type="file" accept="image/*" onChange={handleFile}/>
-            </label>
-
-            {preview && <img className="preview" src={preview} />}
-
-            <button className="primary" onClick={handleAnalyze}>
-              {loading ? "Analyzing..." : "Analyze Outfit"}
-            </button>
-          </div>
-
-          {result && (
-            <div className="card">
-              <h3>Outfit Breakdown</h3>
-
-              <OutfitItem title="Topwear" item={result.outfit_breakdown.topwear}/>
-              <OutfitItem title="Bottomwear" item={result.outfit_breakdown.bottomwear}/>
-              <OutfitItem title="Footwear" item={result.outfit_breakdown.footwear}/>
-
-              <div className="metadata">
-                <p><b>Style:</b> {result.fashion_metadata.style}</p>
-                <p><b>Occasion:</b> {result.fashion_metadata.occasion}</p>
-                <p><b>Season:</b> {result.fashion_metadata.season}</p>
-                <p><b>Confidence:</b> {result.confidence_score}%</p>
-              </div>
-            </div>
-          )}
-        </section>
-
-        {result && (
+        {page === "analyze" && (
           <>
-            <section className="card">
-              <h3>Shopping Matches</h3>
-              <div className="matches">
-                {result.shopping_matches.map((m: any, i: number) => (
-                  <div className="match" key={i}>
-                    <h4>{m.matched_product_name}</h4>
-                    <p><b>Detected:</b> {m.detected_item}</p>
-                    <p><b>Source:</b> {m.source}</p>
-                    <p><b>Price:</b> {m.estimated_price}</p>
-                    <p><b>Search:</b> {m.search_query}</p>
-                    <span>{m.match_score}% match</span>
-                  </div>
-                ))}
+            <section className="hero">
+              <h2>Upload an outfit image</h2>
+              <p>WardroAI turns outfit images into clean fashion details using offline CPU processing.</p>
+            </section>
+
+            <section className="grid">
+              <div className="card">
+                <h3>Outfit Image</h3>
+
+                <label className="upload">
+                  <Upload size={28} />
+                  <span>Choose image</span>
+                  <input type="file" accept="image/*" onChange={handleFile} />
+                </label>
+
+                {preview && <img className="preview" src={preview} />}
+
+                <button className="primary" onClick={handleAnalyze}>
+                  {loading ? "Analyzing..." : "Analyze Outfit"}
+                </button>
               </div>
+
+              <InfoCard />
+            </section>
+          </>
+        )}
+
+        {page === "results" && (
+          <>
+            <section className="hero">
+              <h2>Outfit Results</h2>
+              <p>Clear breakdown of the latest uploaded outfit.</p>
+            </section>
+
+            {!result ? (
+              <div className="card">No result yet. Upload and analyze an outfit first.</div>
+            ) : (
+              <>
+                <section className="grid">
+                  <div className="card">
+                    <h3>Outfit Breakdown</h3>
+                    <OutfitItem title="Topwear" item={result.outfit_breakdown.topwear} />
+                    <OutfitItem title="Bottomwear" item={result.outfit_breakdown.bottomwear} />
+                    <OutfitItem title="Footwear" item={result.outfit_breakdown.footwear} />
+
+                    <div className="metadata">
+                      <p><b>Style:</b> {result.fashion_metadata.style}</p>
+                      <p><b>Occasion:</b> {result.fashion_metadata.occasion}</p>
+                      <p><b>Season:</b> {result.fashion_metadata.season}</p>
+                      <p><b>Confidence:</b> {result.confidence_score}%</p>
+                    </div>
+                  </div>
+
+                  <div className="card">
+                    <h3>Fashion Summary</h3>
+                    <p><b>Image:</b> {result.image_name}</p>
+                    <p><b>Mode:</b> {result.runtime?.mode}</p>
+                    <p><b>Device:</b> {result.runtime?.device}</p>
+                    <p><b>Inference:</b> {result.runtime?.inference}</p>
+                  </div>
+                </section>
+
+                <section className="card">
+                  <h3>Shopping Matches</h3>
+                  <div className="matches">
+                    {result.shopping_matches?.map((m: any, i: number) => (
+                      <div className="match" key={i}>
+                        <h4>{m.matched_product_name}</h4>
+                        <p><b>Detected:</b> {m.detected_item}</p>
+                        <p><b>Category:</b> {m.category}</p>
+                        <p><b>Source:</b> {m.source}</p>
+                        <p><b>Price:</b> {m.estimated_price}</p>
+                        <p><b>Search Query:</b> {m.search_query}</p>
+                        <span>{m.match_score}% match</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </>
+            )}
+          </>
+        )}
+
+        {page === "history" && (
+          <>
+            <section className="hero">
+              <h2>Analysis History</h2>
+              <p>Previous outfit analyses saved locally in SQLite.</p>
             </section>
 
             <section className="card">
-              <div className="json-header">
-                <h3>Structured Output</h3>
-                <div>
-                  <button onClick={copyJSON}><Copy size={16}/> Copy JSON</button>
-                  <button onClick={downloadJSON}><Download size={16}/> Export JSON</button>
+              <h3>Previous Analyses</h3>
+
+              {history.length === 0 && <p>No history yet.</p>}
+
+              {history.map((h) => (
+                <div className="history-item" key={h.id} onClick={() => openHistoryItem(h.id)}>
+                  <h4>{h.image_name}</h4>
+                  <p>{h.style} · {h.occasion} · {h.confidence}% confidence</p>
+                  <small>{h.created_at}</small>
                 </div>
+              ))}
+            </section>
+          </>
+        )}
+
+        {page === "settings" && (
+          <>
+            <section className="hero">
+              <h2>Settings</h2>
+              <p>Offline runtime and system information.</p>
+            </section>
+
+            <section className="grid">
+              <div className="card">
+                <h3>Runtime Settings</h3>
+                <p><b>Offline Mode:</b> Enabled</p>
+                <p><b>Inference:</b> CPU only</p>
+                <p><b>Database:</b> SQLite local database</p>
+                <p><b>Cloud APIs:</b> Disabled</p>
               </div>
 
-              <pre>{JSON.stringify(result, null, 2)}</pre>
+              <div className="card">
+                <h3>Backend Health</h3>
+                {health ? (
+                  <>
+                    <p><b>Status:</b> {health.status}</p>
+                    <p><b>Runtime:</b> {health.runtime}</p>
+                    <p><b>Database:</b> {health.database}</p>
+                    <p><b>Cloud APIs:</b> {health.cloud_apis}</p>
+                  </>
+                ) : (
+                  <p>Backend health unavailable. Make sure FastAPI is running.</p>
+                )}
+              </div>
             </section>
           </>
         )}
@@ -143,6 +242,8 @@ export default function App() {
 }
 
 function OutfitItem({ title, item }: any) {
+  if (!item) return null;
+
   return (
     <div className="outfit-item">
       <div>
@@ -150,9 +251,21 @@ function OutfitItem({ title, item }: any) {
         <p>{item.item_name}</p>
       </div>
       <div>
-        <span>{item.dominant_color}</span>
+        <span>{item.dominant_color || item.color}</span>
         <small>{item.confidence}%</small>
       </div>
+    </div>
+  );
+}
+
+function InfoCard() {
+  return (
+    <div className="card">
+      <h3>How it works</h3>
+      <p>1. Upload an outfit image.</p>
+      <p>2. WardroAI analyzes clothing colors and categories offline.</p>
+      <p>3. Results are shown as readable fashion cards.</p>
+      <p>4. History is saved locally using SQLite.</p>
     </div>
   );
 }
