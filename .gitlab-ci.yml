@@ -23,7 +23,7 @@ before_script:
 format:
   stage: format
   script:
-    - npm run format:check
+    - npx prettier --check .
 
 lint:
   stage: lint
@@ -36,7 +36,7 @@ lint:
 type_check:
   stage: type_check
   script:
-    - npm run type_check
+    - npx tsc --noEmit
 
 test:
   stage: test
