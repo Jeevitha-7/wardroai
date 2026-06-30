@@ -49,8 +49,8 @@ def main():
         "127.0.0.1",
         "--server.port",
         str(port),
-        "--server.headless",
-        "true",
+       "--server.headless",
+       "false",
         "--browser.gatherUsageStats",
         "false",
     ]
