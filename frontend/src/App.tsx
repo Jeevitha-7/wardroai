@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { Upload, Cpu, WifiOff, Database } from "lucide-react";
 import { analyzeOutfit, getHistory, getAnalysisById, getHealth } from "./api";
 
@@ -74,24 +75,46 @@ export default function App() {
         <p>Offline AI Outfit Breakdown</p>
 
         <nav>
-          <button className={page === "analyze" ? "active" : ""} onClick={() => setPage("analyze")}>
+          <button
+            type="button"
+            className={page === "analyze" ? "active" : ""}
+            onClick={() => setPage("analyze")}
+          >
             Analyze Outfit
           </button>
-          <button className={page === "results" ? "active" : ""} onClick={() => setPage("results")}>
+          <button
+            type="button"
+            className={page === "results" ? "active" : ""}
+            onClick={() => setPage("results")}
+          >
             Results
           </button>
-          <button className={page === "history" ? "active" : ""} onClick={() => setPage("history")}>
+          <button
+            type="button"
+            className={page === "history" ? "active" : ""}
+            onClick={() => setPage("history")}
+          >
             History
           </button>
-          <button className={page === "settings" ? "active" : ""} onClick={() => setPage("settings")}>
+          <button
+            type="button"
+            className={page === "settings" ? "active" : ""}
+            onClick={() => setPage("settings")}
+          >
             Settings
           </button>
         </nav>
 
         <div className="status">
-          <span><WifiOff size={16} /> Offline Mode</span>
-          <span><Cpu size={16} /> CPU Inference</span>
-          <span><Database size={16} /> Local Database</span>
+          <span>
+            <WifiOff size={16} /> Offline Mode
+          </span>
+          <span>
+            <Cpu size={16} /> CPU Inference
+          </span>
+          <span>
+            <Database size={16} /> Local Database
+          </span>
         </div>
       </aside>
 
@@ -100,7 +123,10 @@ export default function App() {
           <>
             <section className="hero">
               <h2>Upload an outfit image</h2>
-              <p>WardroAI turns outfit images into clean fashion details using offline CPU processing.</p>
+              <p>
+                WardroAI turns outfit images into clean fashion details using offline CPU
+                processing.
+              </p>
             </section>
 
             <section className="grid">
@@ -113,9 +139,9 @@ export default function App() {
                   <input type="file" accept="image/*" onChange={handleFile} />
                 </label>
 
-                {preview && <img className="preview" src={preview} />}
+                {preview && <img className="preview" src={preview} alt="Uploaded outfit preview" />}
 
-                <button className="primary" onClick={handleAnalyze}>
+                <button type="button" className="primary" onClick={handleAnalyze}>
                   {loading ? "Analyzing..." : "Analyze Outfit"}
                 </button>
               </div>
@@ -147,7 +173,10 @@ export default function App() {
                       <DetailRow label="Style" value={result.fashion_metadata.style} />
                       <DetailRow label="Occasion" value={result.fashion_metadata.occasion} />
                       <DetailRow label="Season" value={result.fashion_metadata.season} />
-                      <DetailRow label="Color Harmony" value={result.fashion_metadata.color_harmony} />
+                      <DetailRow
+                        label="Color Harmony"
+                        value={result.fashion_metadata.color_harmony}
+                      />
                       <DetailRow label="Confidence" value={`${result.confidence_score}%`} />
                       <DetailRow label="Outfit Score" value={`${result.outfit_score}%`} />
                     </div>
@@ -182,11 +211,21 @@ export default function App() {
                     {result.shopping_matches?.map((m: any, i: number) => (
                       <div className="match" key={i}>
                         <h4>{m.matched_product_name}</h4>
-                        <p><b>Detected:</b> {m.detected_item}</p>
-                        <p><b>Category:</b> {m.category}</p>
-                        <p><b>Source:</b> {m.source}</p>
-                        <p><b>Price:</b> {m.estimated_price}</p>
-                        <p><b>Search Query:</b> {m.search_query}</p>
+                        <p>
+                          <b>Detected:</b> {m.detected_item}
+                        </p>
+                        <p>
+                          <b>Category:</b> {m.category}
+                        </p>
+                        <p>
+                          <b>Source:</b> {m.source}
+                        </p>
+                        <p>
+                          <b>Price:</b> {m.estimated_price}
+                        </p>
+                        <p>
+                          <b>Search Query:</b> {m.search_query}
+                        </p>
                         <span>{m.match_score}% match</span>
                       </div>
                     ))}
@@ -217,11 +256,18 @@ export default function App() {
               {history.length === 0 && <p>No history yet.</p>}
 
               {history.map((h) => (
-                <div className="history-item" key={h.id} onClick={() => openHistoryItem(h.id)}>
+                <button
+                  type="button"
+                  className="history-item"
+                  key={h.id}
+                  onClick={() => openHistoryItem(h.id)}
+                >
                   <h4>{h.image_name}</h4>
-                  <p>{h.style} · {h.occasion} · {h.confidence}% confidence</p>
+                  <p>
+                    {h.style} · {h.occasion} · {h.confidence}% confidence
+                  </p>
                   <small>{h.created_at}</small>
-                </div>
+                </button>
               ))}
             </section>
           </>
@@ -237,20 +283,36 @@ export default function App() {
             <section className="grid">
               <div className="card">
                 <h3>Runtime Settings</h3>
-                <p><b>Offline Mode:</b> Enabled</p>
-                <p><b>Inference:</b> CPU only</p>
-                <p><b>Database:</b> SQLite local database</p>
-                <p><b>Cloud APIs:</b> Disabled</p>
+                <p>
+                  <b>Offline Mode:</b> Enabled
+                </p>
+                <p>
+                  <b>Inference:</b> CPU only
+                </p>
+                <p>
+                  <b>Database:</b> SQLite local database
+                </p>
+                <p>
+                  <b>Cloud APIs:</b> Disabled
+                </p>
               </div>
 
               <div className="card">
                 <h3>Backend Health</h3>
                 {health ? (
                   <>
-                    <p><b>Status:</b> {health.status}</p>
-                    <p><b>Runtime:</b> {health.runtime}</p>
-                    <p><b>Database:</b> {health.database}</p>
-                    <p><b>Cloud APIs:</b> {health.cloud_apis}</p>
+                    <p>
+                      <b>Status:</b> {health.status}
+                    </p>
+                    <p>
+                      <b>Runtime:</b> {health.runtime}
+                    </p>
+                    <p>
+                      <b>Database:</b> {health.database}
+                    </p>
+                    <p>
+                      <b>Cloud APIs:</b> {health.cloud_apis}
+                    </p>
                   </>
                 ) : (
                   <p>Backend health unavailable. Make sure FastAPI is running.</p>

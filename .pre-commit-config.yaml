@@ -13,6 +13,36 @@ repos:
       - id: gitleaks
   - repo: local
     hooks:
+      - id: eslint
+        name: ESLint
+        entry: npm run lint:eslint
+        language: system
+        pass_filenames: false
+      - id: prettier
+        name: Prettier format check
+        entry: npm run format:check
+        language: system
+        pass_filenames: false
+      - id: biome
+        name: Biome lint
+        entry: npm run lint:biome
+        language: system
+        pass_filenames: false
+      - id: oxlint
+        name: Oxlint
+        entry: npm run lint:oxlint
+        language: system
+        pass_filenames: false
+      - id: knip
+        name: Knip dead code check
+        entry: npm run lint:knip
+        language: system
+        pass_filenames: false
+      - id: typescript
+        name: TypeScript type check
+        entry: npm run type_check
+        language: system
+        pass_filenames: false
       - id: wardroai-tests
         name: WardroAI tests
         entry: npm test

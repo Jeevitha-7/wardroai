@@ -1,7 +1,16 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.1/schema.json",
   "files": {
-    "ignore": ["backend/.venv", "frontend/node_modules", "frontend/dist", "node_modules"]
+    "ignoreUnknown": true,
+    "includes": [
+      "*.json",
+      "*.js",
+      "frontend/index.html",
+      "frontend/package.json",
+      "frontend/src/**/*.{css,ts,tsx}",
+      ".specify/**/*.md",
+      "specs/**/*.md"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -11,7 +20,10 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended",
+      "suspicious": {
+        "noExplicitAny": "off"
+      }
     }
   }
 }

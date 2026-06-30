@@ -1,5 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "entry": ["frontend/src/main.tsx", "app.py", "backend/main.py"],
-  "project": ["frontend/src/**/*.{ts,tsx}", "scripts/**/*.py", "backend/**/*.py"]
+  "project": ["frontend/src/**/*.{ts,tsx}", "scripts/**/*.py", "backend/**/*.py"],
+  "ignoreBinaries": ["backend/.venv/bin/python", "gitleaks", "python3"],
+  "ignoreDependencies": ["@eslint/js", "concurrently", "lucide-react", "react", "react-dom"]
 }

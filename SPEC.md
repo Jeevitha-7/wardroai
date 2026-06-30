@@ -37,13 +37,13 @@ JSON Generation
 ## Output Schema
 
 {
-    "item_id":1,
-    "category":"Kurti",
-    "color":"Blue",
-    "pattern":"Floral",
-    "occasion":"Casual",
-    "season":"Summer",
-    "confidence":95.6
+"item_id":1,
+"category":"Kurti",
+"color":"Blue",
+"pattern":"Floral",
+"occasion":"Casual",
+"season":"Summer",
+"confidence":95.6
 }
 
 ---

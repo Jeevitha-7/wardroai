@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Inter, Arial, sans-serif;
-  background: #EEE4DA;
+  background: #eee4da;
   color: #1f1f1f;
 }
 
@@ -18,7 +18,7 @@ body {
 }
 
 .sidebar h1 {
-  color: #4D0E13;
+  color: #4d0e13;
   margin-bottom: 4px;
 }
 
@@ -45,7 +45,7 @@ nav button {
 }
 
 nav button.active {
-  background: #4D0E13;
+  background: #4d0e13;
   color: white;
 }
 
@@ -59,7 +59,7 @@ nav button.active {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #EEE4DA;
+  background: #eee4da;
   padding: 10px;
   border-radius: 12px;
   font-size: 13px;
@@ -99,14 +99,14 @@ nav button.active {
 }
 
 .upload {
-  border: 2px dashed #C8A49F;
+  border: 2px dashed #c8a49f;
   border-radius: 16px;
   padding: 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  color: #4D0E13;
+  color: #4d0e13;
   gap: 10px;
 }
 
@@ -125,7 +125,7 @@ nav button.active {
 .primary {
   width: 100%;
   margin-top: 18px;
-  background: #4D0E13;
+  background: #4d0e13;
   color: white;
   border: none;
   padding: 14px;
@@ -139,7 +139,7 @@ nav button.active {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  background: #EEE4DA;
+  background: #eee4da;
   border-radius: 14px;
   padding: 14px;
   margin-bottom: 12px;
@@ -147,7 +147,7 @@ nav button.active {
 
 .outfit-item h4 {
   margin: 0;
-  color: #4D0E13;
+  color: #4d0e13;
 }
 
 .outfit-item p {
@@ -164,7 +164,7 @@ nav button.active {
 }
 
 .outfit-item span {
-  background: #D8C4AC;
+  background: #d8c4ac;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 13px;
@@ -188,7 +188,7 @@ nav button.active {
 }
 
 .metadata {
-  background: #F7EFE8;
+  background: #f7efe8;
   padding: 14px;
   border-radius: 14px;
 }
@@ -216,14 +216,14 @@ nav button.active {
 }
 
 .recommendation {
-  background: #F7EFE8;
+  background: #f7efe8;
   border-radius: 14px;
   margin-top: 18px;
   padding: 14px;
 }
 
 .recommendation h4 {
-  color: #4D0E13;
+  color: #4d0e13;
   margin: 0 0 8px;
 }
 
@@ -237,10 +237,36 @@ nav button.active {
 }
 
 .notes p {
-  background: #EEE4DA;
+  background: #eee4da;
   border-radius: 14px;
   margin: 0;
   padding: 12px 14px;
+}
+
+.history-item {
+  width: 100%;
+  border: 1px solid #e2d6cc;
+  border-radius: 14px;
+  background: #f7efe8;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 12px;
+  padding: 14px;
+  text-align: left;
+}
+
+.history-item h4 {
+  color: #4d0e13;
+  margin: 0 0 6px;
+}
+
+.history-item p {
+  margin: 0 0 6px;
+}
+
+.history-item small {
+  color: #6b5c55;
 }
 
 .matches {
@@ -257,13 +283,13 @@ nav button.active {
 }
 
 .match h4 {
-  color: #4D0E13;
+  color: #4d0e13;
 }
 
 .match span {
   display: inline-block;
   margin-top: 8px;
-  background: #C8A49F;
+  background: #c8a49f;
   color: white;
   padding: 6px 10px;
   border-radius: 999px;
@@ -277,7 +303,7 @@ nav button.active {
 
 .json-header button {
   margin-left: 8px;
-  border: 1px solid #D8C4AC;
+  border: 1px solid #d8c4ac;
   background: white;
   padding: 8px 12px;
   border-radius: 10px;

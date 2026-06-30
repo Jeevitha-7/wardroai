@@ -1,6 +1,9 @@
 stages:
+  - format
   - lint
+  - type_check
   - test
+  - coverage
   - security
 
 variables:
@@ -12,19 +15,39 @@ cache:
     - backend/.venv
 
 before_script:
+  - npm ci
   - python3 -m venv backend/.venv
   - source backend/.venv/bin/activate
   - pip install -r backend/requirements.txt
+
+format:
+  stage: format
+  script:
+    - npm run format:check
 
 lint:
   stage: lint
   script:
     - npm run lint
+    - npm run lint:biome
+    - npm run lint:oxlint
+    - npm run lint:knip
+
+type_check:
+  stage: type_check
+  script:
+    - npm run type_check
 
 test:
   stage: test
   script:
     - npm test
+
+coverage:
+  stage: coverage
+  script:
+    - npm run coverage
+  coverage: '/TOTAL:\s+([0-9.]+)%/'
 
 security:
   stage: security
