@@ -1,11 +1,21 @@
 {
   "name": "wardroai",
   "version": "1.0.0",
+  "description": "Offline CPU wardrobe and outfit analyzer with Streamlit, OpenCV, MediaPipe fallback zones, SQLite history, and local catalog matching.",
   "private": true,
   "scripts": {
-    "backend": "bash -c 'cd backend && source .venv/bin/activate && uvicorn main:app --reload'",
-    "frontend": "bash -c 'cd frontend && npm run dev'",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+    "setup": "python3 -m venv backend/.venv && bash -c 'source backend/.venv/bin/activate && pip install -r backend/requirements.txt'",
+    "start": "python3 scripts/start_streamlit.py",
+    "api": "bash -c 'cd backend && source .venv/bin/activate && uvicorn main:app --reload --port 8000'",
+    "lint": "backend/.venv/bin/python -m py_compile app.py backend/analyzer.py backend/catalog_matcher.py backend/database.py backend/main.py scripts/start_streamlit.py && npm --prefix frontend run build",
+    "format:check": "npx prettier --check .",
+    "security:secrets": "gitleaks detect --source . --verbose",
+    "security:audit": "npm audit --omit=dev && bash -c 'source backend/.venv/bin/activate && pip-audit -r backend/requirements.txt'",
+    "test": "backend/.venv/bin/python -m unittest discover -s tests",
+    "coverage": "backend/.venv/bin/python scripts/coverage_check.py --fail-under 25",
+    "biome": "npx biome check .",
+    "oxlint": "npx oxlint frontend/src",
+    "knip": "npx knip"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"
