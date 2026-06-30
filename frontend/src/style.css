@@ -138,6 +138,7 @@ nav button.active {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   background: #EEE4DA;
   border-radius: 14px;
   padding: 14px;
@@ -153,11 +154,31 @@ nav button.active {
   margin: 4px 0 0;
 }
 
+.outfit-item small {
+  color: #6b5c55;
+}
+
+.outfit-meta {
+  flex-shrink: 0;
+  text-align: right;
+}
+
 .outfit-item span {
   background: #D8C4AC;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.outfit-item i {
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(31, 31, 31, 0.28);
+  border-radius: 50%;
+  display: inline-block;
 }
 
 .outfit-item small {
@@ -170,6 +191,56 @@ nav button.active {
   background: #F7EFE8;
   padding: 14px;
   border-radius: 14px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #e2d6cc;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.detail-row:first-child {
+  padding-top: 0;
+}
+
+.detail-row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.detail-row span {
+  text-align: right;
+}
+
+.recommendation {
+  background: #F7EFE8;
+  border-radius: 14px;
+  margin-top: 18px;
+  padding: 14px;
+}
+
+.recommendation h4 {
+  color: #4D0E13;
+  margin: 0 0 8px;
+}
+
+.recommendation p {
+  margin: 0;
+}
+
+.notes {
+  display: grid;
+  gap: 10px;
+}
+
+.notes p {
+  background: #EEE4DA;
+  border-radius: 14px;
+  margin: 0;
+  padding: 12px 14px;
 }
 
 .matches {

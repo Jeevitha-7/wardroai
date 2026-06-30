@@ -144,19 +144,35 @@ export default function App() {
                     <OutfitItem title="Footwear" item={result.outfit_breakdown.footwear} />
 
                     <div className="metadata">
-                      <p><b>Style:</b> {result.fashion_metadata.style}</p>
-                      <p><b>Occasion:</b> {result.fashion_metadata.occasion}</p>
-                      <p><b>Season:</b> {result.fashion_metadata.season}</p>
-                      <p><b>Confidence:</b> {result.confidence_score}%</p>
+                      <DetailRow label="Style" value={result.fashion_metadata.style} />
+                      <DetailRow label="Occasion" value={result.fashion_metadata.occasion} />
+                      <DetailRow label="Season" value={result.fashion_metadata.season} />
+                      <DetailRow label="Color Harmony" value={result.fashion_metadata.color_harmony} />
+                      <DetailRow label="Confidence" value={`${result.confidence_score}%`} />
+                      <DetailRow label="Outfit Score" value={`${result.outfit_score}%`} />
                     </div>
                   </div>
 
                   <div className="card">
                     <h3>Fashion Summary</h3>
-                    <p><b>Image:</b> {result.image_name}</p>
-                    <p><b>Mode:</b> {result.runtime?.mode}</p>
-                    <p><b>Device:</b> {result.runtime?.device}</p>
-                    <p><b>Inference:</b> {result.runtime?.inference}</p>
+                    <DetailRow label="Image" value={result.image_name} />
+                    <DetailRow label="Mode" value={result.runtime?.mode} />
+                    <DetailRow label="Device" value={result.runtime?.device} />
+                    <DetailRow label="Inference" value={result.runtime?.inference} />
+
+                    <div className="recommendation">
+                      <h4>Recommendation</h4>
+                      <p>{result.fashion_metadata.recommendation}</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="card">
+                  <h3>Analysis Notes</h3>
+                  <div className="notes">
+                    {result.fashion_metadata.notes?.map((note: string, i: number) => (
+                      <p key={i}>{note}</p>
+                    ))}
                   </div>
                 </section>
 
@@ -175,6 +191,13 @@ export default function App() {
                       </div>
                     ))}
                   </div>
+                </section>
+
+                <section className="card">
+                  <div className="json-header">
+                    <h3>Structured Output</h3>
+                  </div>
+                  <pre>{JSON.stringify(result, null, 2)}</pre>
                 </section>
               </>
             )}
@@ -249,12 +272,25 @@ function OutfitItem({ title, item }: any) {
       <div>
         <h4>{title}</h4>
         <p>{item.item_name}</p>
+        <small>{item.detected_item}</small>
       </div>
-      <div>
-        <span>{item.dominant_color || item.color}</span>
+      <div className="outfit-meta">
+        <span>
+          <i style={{ background: item.hex_color }} />
+          {item.dominant_color || item.color}
+        </span>
         <small>{item.confidence}%</small>
       </div>
     </div>
+  );
+}
+
+function DetailRow({ label, value }: { label: string; value?: string | number }) {
+  return (
+    <p className="detail-row">
+      <b>{label}</b>
+      <span>{value || "Not available"}</span>
+    </p>
   );
 }
 
