@@ -1,0 +1,11 @@
+title = "WardroAI secret scanning"
+
+[allowlist]
+description = "Ignore generated dependencies and local artifacts"
+paths = [
+  '''node_modules/''',
+  '''frontend/node_modules/''',
+  '''backend/.venv/''',
+  '''frontend/dist/''',
+  '''.*\.db$'''
+]

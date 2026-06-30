@@ -1,0 +1,8 @@
+{
+  "categories": {
+    "correctness": "warn",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "ignorePatterns": ["node_modules/**", "frontend/node_modules/**", "frontend/dist/**"]
+}
