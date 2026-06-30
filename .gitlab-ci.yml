@@ -1,0 +1,35 @@
+stages:
+  - lint
+  - test
+  - security
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - backend/.venv
+
+before_script:
+  - python3 -m venv backend/.venv
+  - source backend/.venv/bin/activate
+  - pip install -r backend/requirements.txt
+
+lint:
+  stage: lint
+  script:
+    - npm run lint
+
+test:
+  stage: test
+  script:
+    - npm test
+
+security:
+  stage: security
+  allow_failure: true
+  script:
+    - npm audit --omit=dev
+    - pip install pip-audit
+    - pip-audit -r backend/requirements.txt
